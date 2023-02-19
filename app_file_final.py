@@ -23,6 +23,7 @@ col1,col2,col3=st.columns(3)
 
 with col1:    
     st.metric("Data Availability Period","04-01-2011 to 08-01-2021")
+#    st.metric(st.markdown('<div style="text-align: center; font-size:30px; font-weight:bold">DSAI DIGI AGRI PLATFORM</div>', unsafe_allow_html=True),"04-01-2011 to 08-01-2021")
 
 with col2:
     st.metric('Training Period',"09-01-2011 to 31-08-2018")
@@ -38,36 +39,41 @@ tab1,tab2=st.tabs(['Rampura','Overall'])
 
 with tab1:
     st.header("Rampura Ground Water Level Prediction")
+    st.markdown("\n\n")    
+    st.markdown("\n\n")
     
-    p = figure(title="Test Actual vs Predicted GW Level", x_axis_label="Date", y_axis_label="GW_level",x_axis_type="datetime",)
-    p.line(ram_test_pred['Date'], ram_test_pred['Actual'], legend_label="Actual", color="blue", line_width=5,alpha=0.4)
-    p.line(ram_test_pred['Date'], ram_test_pred['Predicted'], legend_label="Predicted", color="red", line_width=1)
-    st.bokeh_chart(p, use_container_width=True)    
-    
-    c1,c2,c3,c4,c5,c6=st.columns(6)
+    ch1,ch2=st.columns(2)
+    with ch1:
+        p = figure(title="Test Actual vs Predicted GW Level", x_axis_label="Date", y_axis_label="GW_level",x_axis_type="datetime",
+                   height=500)
+        p.line(ram_test_pred['Date'], ram_test_pred['Actual'], legend_label="Actual", color="blue", line_width=5,alpha=0.4)
+        p.line(ram_test_pred['Date'], ram_test_pred['Predicted'], legend_label="Predicted", color="red", line_width=1)
+        st.bokeh_chart(p,use_container_width=True)    
+        
+    with ch2:    
+        z = figure(title="Train Actual vs Predicted GW Level", x_axis_label="Date", y_axis_label="GW_level",x_axis_type="datetime",
+                   height=500)
+        z.line(ram_train_pred['Date'], ram_train_pred['Actual'], legend_label="Actual", color="blue",line_width=5,alpha=0.4)
+        z.line(ram_train_pred['Date'], ram_train_pred['Predicted'], legend_label="Predicted", color="red", line_width=1)
+        st.bokeh_chart(z, use_container_width=True)    
 
-    with c3:    
+    c1,c2,c3,c4,c5,c6,c7,c8=st.columns(8)
+
+    with c2:    
         st.metric("Test Accuracy","99.94%")
 
-    with c5:
+    with c3:
         st.metric('Test MAPE',"0.06%")
         
-    
-    
-    z = figure(title="Train Actual vs Predicted GW Level", x_axis_label="Date", y_axis_label="GW_level",x_axis_type="datetime")
-    z.line(ram_train_pred['Date'], ram_train_pred['Actual'], legend_label="Actual", color="blue",line_width=5,alpha=0.4)
-    z.line(ram_train_pred['Date'], ram_train_pred['Predicted'], legend_label="Predicted", color="red", line_width=1)
-    st.bokeh_chart(z, use_container_width=True)    
-    
-    d1,d2,d3,d4,d5,d6=st.columns(6)
-
-    with d3:    
+    with c6:    
         st.metric("Train Accuracy","99.95%")
 
-    with d5:
+    with c7:
         st.metric('Train MAPE',"0.05%")
-
-    
+        
+    st.markdown("\n\n")
+    st.markdown("\n\n")
+    st.header(" ")  
     start_date=st.date_input("Select the date from which the predictions will be plotted:",
                              value=datetime.date(year=2018,month=7,day=23),key='rampura')
     num_days=st.number_input("Type the number of days for which the prediction will be plotted:",
@@ -78,10 +84,12 @@ with tab1:
     
     ram_subset_pred.reset_index(inplace=True)
     
-    q = figure(title="Subset Actual vs Predicted GW Level", x_axis_label="Date", y_axis_label="GW_level",x_axis_type="datetime")
+    q = figure(title="Subset Actual vs Predicted GW Level", x_axis_label="Date", y_axis_label="GW_level",x_axis_type="datetime",
+               width=500, height=400)
     q.line(ram_subset_pred['Date'], ram_subset_pred['Actual'], legend_label="Actual", color="blue",line_width=5,alpha=0.4)
     q.line(ram_subset_pred['Date'], ram_subset_pred['Predicted'], legend_label="Predicted", color="red", line_width=1)
-    st.bokeh_chart(q, use_container_width=True)    
+    st.bokeh_chart(q, use_container_width=True)
+    st.markdown("\n\n")    
     s1,s2,s3,s4=st.columns(4)
     with s3:
         st.metric("Cross-validated mean Accuracy","99.93%")
@@ -89,34 +97,36 @@ with tab1:
 
 with tab2:
     st.header("Overall Ground Water Level Prediction") 
-    
-    p = figure(title="Test Actual vs Predicted GW Level", x_axis_label="Date", y_axis_label="GW_level",x_axis_type="datetime",)
-    p.line(ovr_test_pred['Date'],ovr_test_pred['Actual'], legend_label="Actual", color="blue", line_width=5,alpha=0.4)
-    p.line(ovr_test_pred['Date'], ovr_test_pred['Predicted'], legend_label="Predicted", color="red", line_width=1)
-    st.bokeh_chart(p, use_container_width=True)    
-    
-    q1,q2,q3,q4,q5,q6=st.columns(6)
+    st.markdown("\n\n")
+    ch3,ch4=st.columns(2)    
+    with ch3:
+        p = figure(title="Test Actual vs Predicted GW Level", x_axis_label="Date", y_axis_label="GW_level",x_axis_type="datetime",
+                   width=500, height=500)
+        p.line(ovr_test_pred['Date'],ovr_test_pred['Actual'], legend_label="Actual", color="blue", line_width=5,alpha=0.4)
+        p.line(ovr_test_pred['Date'], ovr_test_pred['Predicted'], legend_label="Predicted", color="red", line_width=1)
+        st.bokeh_chart(p, use_container_width=True)    
+        st.markdown("\n\n")    
 
-    with q3:    
+    with ch4:
+        z = figure(title="Train Actual vs Predicted GW Level", x_axis_label="Date", y_axis_label="GW_level",x_axis_type="datetime",
+                   width=500, height=500)
+        z.line(ovr_train_pred['Date'], ovr_train_pred['Actual'], legend_label="Actual", color="blue",line_width=5,alpha=0.4)
+        z.line(ovr_train_pred['Date'], ovr_train_pred['Predicted'], legend_label="Predicted", color="red", line_width=1)
+        st.bokeh_chart(z, use_container_width=True)       
+
+    q1,q2,q3,q4,q5,q6,q7,q8=st.columns(8)
+
+    with q2:    
         st.metric("Test Accuracy","98.65%")
-
-    with q5:
+    with q3:
         st.metric('Test MAPE',"1.35%")
-   
-    z = figure(title="Train Actual vs Predicted GW Level", x_axis_label="Date", y_axis_label="GW_level",x_axis_type="datetime")
-    z.line(ovr_train_pred['Date'], ovr_train_pred['Actual'], legend_label="Actual", color="blue",line_width=5,alpha=0.4)
-    z.line(ovr_train_pred['Date'], ovr_train_pred['Predicted'], legend_label="Predicted", color="red", line_width=1)
-    st.bokeh_chart(z, use_container_width=True)       
-    
-    w1,w2,w3,w4,w5,w6=st.columns(6)
-
-    with w3:    
+    with q6:    
         st.metric("Train Accuracy","99.44%")
-
-    with w5:
+    with q7:
         st.metric('Train MAPE',"0.56%")
-
-    
+        
+    st.markdown("\n\n")
+    st.markdown("<br></br>",unsafe_allow_html=True)
     start_date=st.date_input("Select the date from which the predictions will be plotted:",
                              value=datetime.date(year=2019,month=2,day=18))
     num_days=st.number_input("Type the number of days for which the prediction will be plotted:",
@@ -127,23 +137,11 @@ with tab2:
     
     ovr_subset_pred.reset_index(inplace=True)
     
-    q = figure(title="Subset Actual vs Predicted GW Level", x_axis_label="Date", y_axis_label="GW_level",x_axis_type="datetime")
+    q = figure(title="Subset Actual vs Predicted GW Level", x_axis_label="Date", y_axis_label="GW_level",x_axis_type="datetime",
+               width=500, height=400)
     q.line(ovr_subset_pred['Date'], ovr_subset_pred['Actual'], legend_label="Actual", color="blue",line_width=5,alpha=0.4)
     q.line(ovr_subset_pred['Date'], ovr_subset_pred['Predicted'], legend_label="Predicted", color="red", line_width=1)
     st.bokeh_chart(q, use_container_width=True)    
     l1,l2,l3,l4=st.columns(4)
     with l3:
         st.metric("Cross-validated mean Accuracy","99.37%")    
-
-
-
-
-
-
-
-
-
-
-
-
-
